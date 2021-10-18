@@ -34,6 +34,7 @@ client.on('messageCreate', async message => {
 
   const command = client.commands.get(commandName);
 
+  // If the command is not found exit
   if(!command)return;
 
   try{
@@ -52,6 +53,7 @@ client.on('interactionCreate', async interaction => {
 
   const command = client.commands.get(interaction.commandName);
 
+  // If the command is not found exit
   if(!command)return;
 
   try{
