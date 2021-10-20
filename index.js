@@ -2,6 +2,9 @@ const fs = require('fs');
 const {Client, Intents, Collection} = require('discord.js');
 const {token, prefix} = require('./config.json');
 
+// Connect to the db
+require('./db_connection.js');
+
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
 
 //Setting up collections for caching commands
@@ -39,7 +42,7 @@ client.on('messageCreate', async message => {
 
   try{
 
-    await command.execute(message);
+    await command.execute(message, args, client);
 
   }catch (e){
     console.log('An error has occured while excuting your command : ', e);
@@ -57,7 +60,7 @@ client.on('interactionCreate', async interaction => {
   if(!command)return;
 
   try{
-    await command.execute(interaction);
+    await command.execute(interaction, client);
   }catch(e){
     console.log('An error has occured while interacting with your command : ', e);
     interaction.reply({content: "There was an error while trying to execute this command."});
