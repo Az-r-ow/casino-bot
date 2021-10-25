@@ -7,6 +7,9 @@ require('./db_connection.js');
 
 const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
 
+//Setting up collections for caching active interactions
+client.active_interactions = new Collection();
+
 //Setting up collections for caching commands
 client.commands = new Collection();
 
@@ -29,7 +32,10 @@ client.once('ready', () => console.log('All set !'));
 client.on('messageCreate', async message => {
 
   //Ignore messages if they're not sent by a user and does not start with the prefix
-  if(message.author.bot || !message.content.startsWith(prefix))return
+  if(message.author.bot || !message.content.startsWith(prefix))return;
+
+  //If the user has already an active interaction ignore his message
+  if(client.active_interaction.get(message.author.id))return;
 
   let args = message.content.split(" ").splice(1);
 
