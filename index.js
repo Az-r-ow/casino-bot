@@ -35,7 +35,7 @@ client.on('messageCreate', async message => {
   if(message.author.bot || !message.content.startsWith(prefix))return;
 
   //If the user has already an active interaction ignore his message
-  if(client.active_interaction.get(message.author.id))return;
+  if(client.active_interactions.get(message.author.id))return;
 
   let args = message.content.split(" ").splice(1);
 
