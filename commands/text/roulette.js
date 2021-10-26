@@ -149,6 +149,10 @@ module.exports = {
                      reason === "user_died" ? "(You lost)" :
                      reason === "user_bailed" ? "(You left the game)" : "";
 
+      let image_url = reason === "user_bailed" ? "https://cdn.discordapp.com/attachments/815303503874228224/902551471424421998/1.png" : "https://media.discordapp.net/attachments/815303503874228224/902551473223761972/2.png";
+
+      let color = reason === "user_bailed" ? 0x2ECC71 : 0xff0000;
+
       if(reason === "idle"){
         let balance = user_balance - user_bet;
 
@@ -161,7 +165,13 @@ module.exports = {
 
       message.edit({
         embeds: [{
-          description: `Game ended ${s_reason} !`
+          description: `Game ended ${s_reason} !`,
+          color,
+          image: {
+            url: image_url,
+            height: 100,
+            width: 100
+          }
         }],
         components: message.components
       })
