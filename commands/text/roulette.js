@@ -54,7 +54,8 @@ module.exports = {
         return interaction.reply({embed: [{
           description: 'An error has occured please contact the developper'
         }]});
-      }
+      };
+      client.active_interactions.delete(interaction.author.id);
       return interaction.reply({embeds: [{
         description: 'Unlucky ! You died.'
       }]})
