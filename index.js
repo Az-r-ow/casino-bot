@@ -5,7 +5,7 @@ const {token, prefix} = require('./config.json');
 // Connect to the db
 require('./db_connection.js');
 
-const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES], presence: {status: 'online', activities: [{name: prefix, type: 'WATCHING', url: 'https://punk-tee.com'}]}});
+const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES], presence: {status: 'online', activities: [{name: `${prefix} help`, type: 'WATCHING', url: 'https://punk-tee.com'}]}});
 
 //Setting up collections for caching active interactions
 client.active_interactions = new Collection();

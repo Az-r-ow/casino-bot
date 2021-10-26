@@ -58,14 +58,22 @@ module.exports = {
         }]});
       };
       client.active_interactions.delete(interaction.author.id);
-      return interaction.reply({embeds: [{
-        description: 'Unlucky ! You died.'
-      }]})
+      return interaction.reply({
+        embeds: [{
+        description: 'Unlucky ! You died.',
+        color: 0xff0000,
+        image: {
+          url: "https://cdn.discordapp.com/attachments/798934421163474954/902586889591222292/lost.png"
+        }
+      }]
+    })
     }
 
     // Put a bullet in a random position
     barrel[random_bullet_placement] = 1;
 
+
+    //Adding the buttons
     const row = new MessageActionRow();
     const yes = new MessageButton().setLabel("Yes").setStyle("SUCCESS").setCustomId('1');
     const no = new MessageButton().setLabel("No").setStyle("DANGER").setCustomId('0');
@@ -75,7 +83,7 @@ module.exports = {
     //Send a message with buttons to contiue or not
     interaction.reply({
       embeds: [{
-      description: `Phew, you survived round \`1\`.\nDo you want to keep playing ?`,
+      description: `Phew, you survived round \`1\`.\nDo you want to keep playing ?\n\*If you want to keep playing press yes\*`,
       fields: [{name: 'Multiplier :', value: '\`x1\`', inline: false}]
     }],
     components: [row]
@@ -118,7 +126,8 @@ module.exports = {
 
             i.reply({
               embeds: [{
-                description: `Unfortunately, you died !`
+                description: `Unfortunately, you died !`,
+                color: 0xff0000
               }]
             }).then(() => collector.stop('user_died'));
 
@@ -138,7 +147,8 @@ module.exports = {
         });
         i.reply({
           embeds: [{
-            description: `You survived ! Your multiplier is now : \`${curr_multiplier}x\``
+            description: `You survived ! Your multiplier is now : \`${curr_multiplier}x\``,
+            color: 0x2ECC71
           }],
           ephemeral: true
         })
@@ -151,7 +161,7 @@ module.exports = {
                      reason === "user_died" ? "(You lost)" :
                      reason === "user_bailed" ? "(You left the game)" : "";
 
-      let image_url = reason === "user_bailed" ? "https://cdn.discordapp.com/attachments/815303503874228224/902551471424421998/1.png?width=300&height=300" : "https://media.discordapp.net/attachments/815303503874228224/902551473223761972/2.png?width=300&height=300";
+      let image_url = reason === "user_bailed" ? "https://cdn.discordapp.com/attachments/798934421163474954/902586866103103508/won.png" : "https://cdn.discordapp.com/attachments/798934421163474954/902586889591222292/lost.png";
 
       let color = reason === "user_bailed" ? 0x2ECC71 : 0xff0000;
 
@@ -170,9 +180,7 @@ module.exports = {
           description: `Game ended ${s_reason} !`,
           color,
           image: {
-            url: image_url,
-            height: 10,
-            width: 10
+            url: image_url
           }
         }],
         components: message.components

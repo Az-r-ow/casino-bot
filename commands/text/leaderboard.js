@@ -7,20 +7,33 @@ module.exports = {
     const User = require('../../db_connection.js');
 
     await User.find({}).sort({balance: "desc"}).limit(5).then(async data => {
-       await data.forEach(async user_data => {
-        await interaction.guild.members.fetch(user_data.id).then(user => {
-          user_data.username = user.user.username;
-        });
-      });
+      
+      // For is used in this case because it supports async await
+      for(user_data of data){
+        let user_info = await interaction.guild.members.fetch(user_data.id);
+        user_data.username = user_info.user.username;
+      }
+
+      let user_rank = 1;
+
+      await data.forEach(user => {
+        user.username = user_rank === 1 ? '🥇- ' + user.username :
+                        user_rank === 2 ? '🥈- ' + user.username :
+                        user_rank === 3 ? '🥉- ' + user.username :
+                        `${rank}- ${user.username}`;
+        user_rank++;
+      })
 
 
-      let data_fields = data.map(user => {
-        return {name: user.username, value: user.balance.toString(), inline: false};
+      let data_fields = await data.map(user => {
+        return {name: user.username, value: `\`${user.balance.toString()}\``, inline: false};
       })
 
       interaction.reply({
         embeds: [{
-          fields: data_fields
+          title: 'Leaderboard :',
+          fields: data_fields,
+          color: 0x9437E3,
         }]
       }).catch(e => {
         console.log('An error has occured while sending a reply : ', e);
