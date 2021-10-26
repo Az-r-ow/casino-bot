@@ -41,13 +41,7 @@ module.exports = {
     // Let the game begin :
     let barrel = [0, 0, 0, 0, 0, 0];
 
-    try{
-      console.log(interaction.author.id);
-      let active = await client.active_interactions.set(interaction.author.id, interaction);
-      console.log(active);
-    }catch (e){
-      console.log(e);
-    }
+    client.active_interactions.set(interaction.author.id, interaction);
 
     let random_bullet_placement = Math.floor(Math.random() * 6);
 

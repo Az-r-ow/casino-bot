@@ -39,6 +39,8 @@ client.on('messageCreate', async message => {
 
   let args = message.content.split(" ").splice(1);
 
+  if(!args)return;
+
   let commandName = args[0].toLowerCase();
 
   const command = client.commands.get(commandName);
