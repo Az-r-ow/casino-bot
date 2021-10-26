@@ -5,7 +5,7 @@ const {token, prefix} = require('./config.json');
 // Connect to the db
 require('./db_connection.js');
 
-const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
+const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES], presence: {status: 'online', activities: [{name: prefix, type: 'WATCHING', url: 'https://punk-tee.com'}]}});
 
 //Setting up collections for caching active interactions
 client.active_interactions = new Collection();
@@ -27,7 +27,13 @@ for(const file of command_files){
 }
 
 
-client.once('ready', () => console.log('All set !'));
+client.once('ready', () => {
+  console.log('All set !');
+
+  // client.options.presence.status = 'online';
+  // client.options.presence.activities = [{name: prefix, type: 'WATCHING', url: 'https://punk-tee.com'}]
+
+});
 
 client.on('messageCreate', async message => {
 
@@ -39,7 +45,7 @@ client.on('messageCreate', async message => {
 
   let args = message.content.split(" ").splice(1);
 
-  if(!args)return;
+  if(!args.length)return;
 
   let commandName = args[0].toLowerCase();
 
