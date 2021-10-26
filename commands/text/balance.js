@@ -1,6 +1,8 @@
 const User = require('../../db_connection.js');
+const {prefix} = require('../../config.json');
 module.exports = {
   name: 'balance',
+  usage: `${prefix} balance <user_tag>`,
   description: 'Check your balance',
   async execute(interaction, args, client){
 

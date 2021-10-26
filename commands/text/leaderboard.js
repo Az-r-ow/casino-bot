@@ -1,5 +1,7 @@
+const {prefix} = require('../../config.json');
 module.exports = {
   name: 'leaderboard',
+  usage: `${prefix} leaderboard`,
   description: 'Get the list of the top 5 richest users in the server.',
   async execute(interaction, args, client){
     const User = require('../../db_connection.js');

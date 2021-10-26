@@ -1,6 +1,8 @@
 const {MessageButton, MessageActionRow} = require('discord.js');
+const {prefix} = require('../../config.json');
 module.exports = {
   name: 'roulette',
+  usage: `${prefix} roulette <amount>`,
   description: 'Survive the roulette game to gain your bet.\n6 bullets gun is used, the more you replay, the more you gain (x4 if you survive the 5 shots).\nAlways count your shots because this is a realistic version of the game!',
   async execute(interaction, args, client){
 
@@ -87,7 +89,7 @@ module.exports = {
       // If the user wants to bail
       if(i.customId === "0"){
         // Calculate the user's new balance
-        let balance = (user_balance - user_bet) + (user_bet * curr_multiplier);
+        let balance = user_balance + (user_bet * curr_multiplier);
 
         User.findOneAndUpdate({id: interaction.author.id}, {balance}).then(() => {
 
@@ -149,7 +151,7 @@ module.exports = {
                      reason === "user_died" ? "(You lost)" :
                      reason === "user_bailed" ? "(You left the game)" : "";
 
-      let image_url = reason === "user_bailed" ? "https://cdn.discordapp.com/attachments/815303503874228224/902551471424421998/1.png" : "https://media.discordapp.net/attachments/815303503874228224/902551473223761972/2.png";
+      let image_url = reason === "user_bailed" ? "https://cdn.discordapp.com/attachments/815303503874228224/902551471424421998/1.png?width=300&height=300" : "https://media.discordapp.net/attachments/815303503874228224/902551473223761972/2.png?width=300&height=300";
 
       let color = reason === "user_bailed" ? 0x2ECC71 : 0xff0000;
 
@@ -169,8 +171,8 @@ module.exports = {
           color,
           image: {
             url: image_url,
-            height: 100,
-            width: 100
+            height: 10,
+            width: 10
           }
         }],
         components: message.components

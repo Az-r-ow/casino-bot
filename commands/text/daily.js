@@ -1,6 +1,7 @@
-
+const {prefix} = require('../../config.json');
 module.exports = {
   name: "daily",
+  usage: `${prefix} daily`,
   description: "Claim your daily coins.",
   async execute(interaction, client){
     // A function that will generate a random number between 50 and 150
