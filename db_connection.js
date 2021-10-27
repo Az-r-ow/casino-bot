@@ -13,6 +13,15 @@ db.once('open', () => {
   console.log("Connected to the db !");
 })
 
+const shop_itemSchema = new mongoose.Schema({
+  id: Number,
+  name: String,
+  price: Number,
+  feature: String
+});
+
+const ShopItem = mongoose.model('shop_items', shop_itemSchema);
+
 const userSchema = new mongoose.Schema({
   id: String,
   balance: {type: Number, default: 0},
@@ -21,4 +30,4 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('users', userSchema);
 
-module.exports = User;
+module.exports = {User, ShopItem, db};

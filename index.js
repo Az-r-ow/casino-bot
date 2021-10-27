@@ -70,11 +70,14 @@ client.on('interactionCreate', async interaction => {
 
   const command = client.commands.get(interaction.commandName);
 
+  // This variable is only valid in case I have one option proposed
+  const args = interaction.options._hoistedOptions.length ? interaction.options._hoistedOptions[0].value.split(" ") : [];
+
   // If the command is not found exit
   if(!command)return;
 
   try{
-    await command.execute(interaction, client);
+    await command.execute(interaction, args, client);
   }catch(e){
     console.log('An error has occured while interacting with your command : ', e);
     interaction.reply({content: "There was an error while trying to execute this command."});

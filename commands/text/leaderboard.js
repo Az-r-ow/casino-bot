@@ -4,10 +4,10 @@ module.exports = {
   usage: `${prefix} leaderboard`,
   description: 'Get the list of the top 5 richest users in the server.',
   async execute(interaction, args, client){
-    const User = require('../../db_connection.js');
+    const {User} = require('../../db_connection.js');
 
     await User.find({}).sort({balance: "desc"}).limit(5).then(async data => {
-      
+
       // For is used in this case because it supports async await
       for(user_data of data){
         let user_info = await interaction.guild.members.fetch(user_data.id);

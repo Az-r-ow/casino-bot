@@ -9,7 +9,7 @@ module.exports = {
       return Math.floor((Math.random() * 100) + 50);
     }
 
-    const User = require('../../db_connection.js');
+    const {User} = require('../../db_connection.js');
     const ms_to_readable = require('../../helpers/ms_to_readable.js');
 
     await User.findOne({id: interaction.member.id}).then(user => {
@@ -22,7 +22,6 @@ module.exports = {
       // And the timestamp will be updated.
 
       if(!user){
-        console.log('No user was found !');
         let newUser = new User({
           id: interaction.member.id,
           balance: amount_won,

@@ -1,4 +1,4 @@
-const User = require('../../db_connection.js');
+const {User} = require('../../db_connection.js');
 const {prefix} = require('../../config.json');
 module.exports = {
   name: 'balance',
@@ -8,7 +8,8 @@ module.exports = {
 
     const {userMention} = require('@discordjs/builders')
 
-    const user_id = args.length > 1 && args[1].match(/\d{18}/g) ? args[1].match(/\d{18}/g)[0] : interaction.member.id;
+    let user_id = args.length > 1 && args[1].match(/\d{18}/g) ? args[1].match(/\d{18}/g)[0] : interaction.member.id;
+    user_id = args[0].match(/\d{18}/g) ? args[0] : user_id;
 
     let username;
 

@@ -8,7 +8,7 @@ module.exports = {
 
     const help_embed = new MessageEmbed();
 
-    client.commands.each(command => {
+    await client.commands.each(command => {
       help_embed.addField(command.name, command.description, false);
     });
 

@@ -6,7 +6,7 @@ module.exports = {
   description: 'Survive the roulette game to gain your bet.\n6 bullets gun is used, the more you replay, the more you gain (x4 if you survive the 5 shots).\nAlways count your shots because this is a realistic version of the game!',
   async execute(interaction, args, client){
 
-    const User = require('../../db_connection.js');
+    const {User} = require('../../db_connection.js');
     //No arguments provided
     // Return error message
     if((args.length === 1) || !+args[1] || +args[1] <= 0)return interaction.reply({embeds: [{
