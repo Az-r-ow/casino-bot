@@ -43,7 +43,7 @@ client.on('messageCreate', async message => {
   //If the user has already an active interaction ignore his message
   if(client.active_interactions.get(message.author.id))return;
 
-  let args = message.content.split(" ").splice(1);
+  let args = message.content.replace(/\s+/g, " ").split(" ").splice(1);
 
   if(!args.length)return;
 
@@ -53,6 +53,8 @@ client.on('messageCreate', async message => {
 
   // If the command is not found exit
   if(!command)return;
+
+  if(command.restricted && message.author.id !== "468141864134901770")return;
 
   try{
 
@@ -71,7 +73,7 @@ client.on('interactionCreate', async interaction => {
   const command = client.commands.get(interaction.commandName);
 
   // This variable is only valid in case I have one option proposed
-  const args = interaction.options._hoistedOptions.length ? interaction.options._hoistedOptions[0].value.split(" ") : [];
+  const args = interaction.options._hoistedOptions.length ? interaction.options._hoistedOptions[0].value.replace(/\s+/g, " ").split(" ") : [];
 
   // If the command is not found exit
   if(!command)return;

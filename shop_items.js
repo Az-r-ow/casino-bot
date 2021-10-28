@@ -12,14 +12,14 @@ db.dropCollection('shop_items', function(err, res){
   }
 })
 
-let whitelist_role = new ShopItem({
+let whitelist_item = new ShopItem({
   id: 1,
   name: 'whitelist',
   price: 3500,
   feature: 'This item will give you access to the whitelist'
 });
 
-whitelist_role.save().then(item => {
+whitelist_item.save().then(item => {
   console.log(`${item.name} has been created !`)
 }).catch(e => {
   console.log('An error has occured while creating an item : ', e);

@@ -6,15 +6,22 @@ module.exports = {
   description: 'Check your balance',
   async execute(interaction, args, client){
 
-    const {userMention} = require('@discordjs/builders')
+    const {userMention} = require('@discordjs/builders');
 
-    let user_id = args.length > 1 && args[1].match(/\d{18}/g) ? args[1].match(/\d{18}/g)[0] : interaction.member.id;
-    user_id = args[0].match(/\d{18}/g) ? args[0] : user_id;
+    //Define this var with a default value
+    let user_id = interaction.member.id;
+
+    if(args.length > 1){
+      // Assign it the tag if matched
+      user_id = args[1].match(/\d{18}/g) ? args[1].match(/\d{18}/g)[0] : interaction.member.id;
+    }; 
+
+    user_id = !args.length ? user_id : args[0].match(/\d{18}/g) ? args[0] : user_id;
 
     let username;
 
     const user = await interaction.guild.members.fetch(user_id).then(user =>{
-      username = user.user. username;
+      username = user.user.username;
     });
 
 
