@@ -8,9 +8,11 @@ module.exports = {
 
     const help_embed = new MessageEmbed();
 
-    await client.commands.each(command => {
+    let public_commands = await client.commands.filter(command => !command.restricted);
+
+    await public_commands.each(command => {
       let slash_availability = command.slash ? "(Available in slash)" : "";
-      help_embed.addField(`${command.name} ${slash_availability}`, command.description, false);
+      help_embed.addField(`${prefix} ${command.name} ${slash_availability}`, command.description, false);
     });
 
     interaction.reply({embeds: [help_embed]});
