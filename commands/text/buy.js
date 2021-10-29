@@ -25,7 +25,7 @@ module.exports = {
     let new_balance = user_profile.balance - item.price;
 
     if(item.name === "whitelist"){
-      const role_id = "903040449588121621";
+      const role_id = "897414675334062101";
 
       const link_button = new MessageButton().setLabel('Form').setStyle('LINK').setURL('https://docs.google.com/forms/d/e/1FAIpQLScXhdzJbZlqsvg8RgGQ62mtN9MPBG5Sc-RzldLUvlkeFVLTkA/viewform?usp=sf_link');
 
