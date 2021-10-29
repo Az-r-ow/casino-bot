@@ -15,10 +15,15 @@ client.commands = new Collection();
 
 const command_files = fs.readdirSync('./commands/text').filter(file => file.endsWith('.js'));
 
+const slash_commands_files = fs.readdirSync('./commands/slash').filter(file => file.endsWith('.js'));
+
+
 // Loading the commands into the collection
 for(const file of command_files){
 
   const command = require(`./commands/text/${file}`);
+
+  command.slash = slash_commands_files.includes(file) ? true : false;
 
   console.log(`${file} has been loaded !`);
 

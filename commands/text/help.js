@@ -9,7 +9,8 @@ module.exports = {
     const help_embed = new MessageEmbed();
 
     await client.commands.each(command => {
-      help_embed.addField(command.name, command.description, false);
+      let slash_availability = command.slash ? "(Available in slash)" : "";
+      help_embed.addField(`${command.name} ${slash_availability}`, command.description, false);
     });
 
     interaction.reply({embeds: [help_embed]});

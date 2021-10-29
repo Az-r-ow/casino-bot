@@ -1,5 +1,6 @@
 const {prefix} = require('../../config.json');
-const {User, ShopItem} = require('../../db_connection.js')
+const {User, ShopItem} = require('../../db_connection.js');
+const {MessageActionRow, MessageButton} = require('discord.js');
 module.exports = {
   name: "buy",
   usage: `${prefix} buy <item_name>`,
@@ -26,13 +27,18 @@ module.exports = {
     if(item.name === "whitelist"){
       const role_id = "903040449588121621";
 
+      const link_button = new MessageButton().setLabel('Form').setStyle('LINK').setURL('https://docs.google.com/forms/d/e/1FAIpQLScXhdzJbZlqsvg8RgGQ62mtN9MPBG5Sc-RzldLUvlkeFVLTkA/viewform?usp=sf_link');
+
+      const row = new MessageActionRow().addComponents(link_button);
+
       interaction.member.roles.add(role_id).then(async ()=>{
         await User.findOneAndUpdate({id: interaction.member.id}, {balance: new_balance}).catch(e => console.log("An error has occured while updating " + interaction.member.id + " Balance", e));
         interaction.reply({
           embeds: [{
-            description: "You are now whitelisted !",
+            description: "You are now whitelisted !\n\*Please fill in the form below\*",
             color: 0x9437E3
-          }]
+          }],
+          components: [row]
         })
       });
     }else{
