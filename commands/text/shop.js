@@ -6,8 +6,10 @@ module.exports = {
   description: 'Show the items that are in the shop',
   async execute(interaction, args, client){
 
-    if(args.length !== 1){
-      let item_name = args[1].toLowerCase();
+    args = args.filter(arg => arg !== this.name);
+
+    if(args.length >= 1){
+      let item_name = args[0].toLowerCase() !== this.name ? args[0].toLowerCase() : args[1].toLowerCase();
 
       await ShopItem.findOne({name: item_name}).then(item_info => {
         interaction.reply({
