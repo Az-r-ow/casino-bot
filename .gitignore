@@ -4,3 +4,4 @@ config.json
 /test
 /img
 .DS_Store
+github_token.txt
