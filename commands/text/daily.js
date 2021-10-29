@@ -3,7 +3,7 @@ module.exports = {
   name: "daily",
   usage: `${prefix} daily`,
   description: "Claim your daily coins.",
-  async execute(interaction, client){
+  async execute(interaction,args,  client){
     // A function that will generate a random number between 50 and 150
     function daily_amount(){
       return Math.floor((Math.random() * 100) + 50);
@@ -24,8 +24,7 @@ module.exports = {
       if(!user){
         let newUser = new User({
           id: interaction.member.id,
-          balance: amount_won,
-          last_claimed: Date.now()
+          balance: amount_won
         });
 
         newUser.save().catch(e => {
