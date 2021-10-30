@@ -1,4 +1,5 @@
 const {MessageButton, MessageActionRow} = require('discord.js');
+const load_barrel = require('../../helpers/load_barrel.js');
 const {prefix} = require('../../config.json');
 module.exports = {
   name: 'roulette',
@@ -15,7 +16,8 @@ module.exports = {
     });
 
     const user_bet = +args[1];
-    let curr_multiplier = 1;
+    let curr_multiplier = 1.3;
+    let curr_round = 0;
 
     let enough_balance = true;
     let user_balance;
@@ -41,13 +43,11 @@ module.exports = {
     if(!enough_balance)return;
 
     // Let the game begin :
-    let barrel = [0, 0, 0, 0, 0, 0];
+    let barrel = load_barrel();
 
     client.active_interactions.set(interaction.author.id, interaction);
 
-    let random_bullet_placement = Math.floor(Math.random() * 6);
-
-    if(random_bullet_placement === 0){
+    if(barrel.indexOf(1) === 0){
       user_balance -= user_bet;
       try {
         await User.findOneAndUpdate({id: interaction.author.id}, {balance: user_balance});
@@ -68,9 +68,6 @@ module.exports = {
       }]
     })
     }
-
-    // Put a bullet in a random position
-    barrel[random_bullet_placement] = 1;
 
 
     //Adding the buttons
@@ -97,7 +94,7 @@ module.exports = {
       // If the user wants to bail
       if(i.customId === "0"){
         // Calculate the user's new balance
-        let balance = user_balance + (user_bet * curr_multiplier);
+        let balance = Math.ceil(user_balance + (user_bet * curr_multiplier));
 
         User.findOneAndUpdate({id: interaction.author.id}, {balance}).then(() => {
 
@@ -116,10 +113,19 @@ module.exports = {
         });
 
       }else{
+
+        function round(value, decimals) {
+          return Number(Math.round(value +'e'+ decimals) +'e-'+ decimals).toFixed(decimals);
+        }
         //Increment the multiplier by 1
-        curr_multiplier += 1;
+        curr_multiplier = Number.parseFloat(curr_multiplier) + Number.parseFloat(0.3);
+        curr_multiplier = round(curr_multiplier, 1)
+
+        //Move to the next round
+        curr_round += 1;
+
         // Check if dead
-        if(barrel.indexOf(1) === curr_multiplier - 1){
+        if(barrel.indexOf(1) === curr_round){
           let balance = user_balance - user_bet;
 
           User.findOneAndUpdate({id: interaction.author.id}, {balance}).then(() => {
