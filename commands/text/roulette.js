@@ -10,7 +10,7 @@ module.exports = {
     const {User} = require('../../db_connection.js');
     //No arguments provided
     // Return error message
-    if((args.length === 1) || !+args[1] || +args[1] <= 0)return interaction.reply({embeds: [{
+    if((args.length === 1) || !+args[1] || +args[1] <= 1)return interaction.reply({embeds: [{
       description: "You have to bet something ! ",
     }]
     });
@@ -48,7 +48,7 @@ module.exports = {
     client.active_interactions.set(interaction.author.id, interaction);
 
     if(barrel.indexOf(1) === 0){
-      user_balance -= user_bet;
+      user_balance -= Math.ceil(user_bet);
       try {
         await User.findOneAndUpdate({id: interaction.author.id}, {balance: user_balance});
       } catch (e) {
@@ -126,7 +126,7 @@ module.exports = {
 
         // Check if dead
         if(barrel.indexOf(1) === curr_round){
-          let balance = user_balance - user_bet;
+          let balance = user_balance - Math.ceil(user_bet);
 
           User.findOneAndUpdate({id: interaction.author.id}, {balance}).then(() => {
 
