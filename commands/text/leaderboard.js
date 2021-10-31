@@ -20,7 +20,7 @@ module.exports = {
         user.username = user_rank === 1 ? '🥇- ' + user.username :
                         user_rank === 2 ? '🥈- ' + user.username :
                         user_rank === 3 ? '🥉- ' + user.username :
-                        `${rank}- ${user.username}`;
+                        `${user_rank}- ${user.username}`;
         user_rank++;
       })
 
