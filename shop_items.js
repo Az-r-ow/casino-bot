@@ -25,19 +25,6 @@ whitelist_item.save().then(item => {
   console.log('An error has occured while creating an item : ', e);
 });
 
-let nft = new ShopItem({
-  id: 2,
-  name: 'nft',
-  price: 10000000000,
-  feature: 'You\`ll buy an nft'
-});
-
-nft.save().then(item => {
-  console.log(`${item.name} has been created !`);
-}).catch(e => {
-  console.log('An error has occured while creating an item : ', e);
-});
-
 let resetDaily = Date.now() - ( 1000 * 60 * 60 * 24);
 
 User.updateMany({}, {last_claimed: resetDaily}).then(res => {
