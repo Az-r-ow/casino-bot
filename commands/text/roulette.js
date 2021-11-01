@@ -16,7 +16,7 @@ module.exports = {
     });
 
     const user_bet = +args[1];
-    let curr_multiplier = 1.5;
+    let curr_multiplier = 1.3;
     let curr_round = 0;
 
     let enough_balance = true;
@@ -118,7 +118,7 @@ module.exports = {
           return Number(Math.round(value +'e'+ decimals) +'e-'+ decimals).toFixed(decimals);
         }
         //Increment the multiplier by 1
-        curr_multiplier = Number.parseFloat(curr_multiplier) + Number.parseFloat(0.5);
+        curr_multiplier = Number.parseFloat(curr_multiplier) + Number.parseFloat(0.3);
         curr_multiplier = round(curr_multiplier, 1)
 
         //Move to the next round
