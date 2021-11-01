@@ -27,6 +27,10 @@ module.exports = {
     if(item.name === "whitelist"){
       const role_id = "897414675334062101";
 
+      const user_roles = await interaction.member.roles.cache
+
+      if(user_roles.filter(role => role.id === role_id).size)return interaction.reply("You already have this role"); 
+
       const link_button = new MessageButton().setLabel('Form').setStyle('LINK').setURL('https://docs.google.com/forms/d/e/1FAIpQLScXhdzJbZlqsvg8RgGQ62mtN9MPBG5Sc-RzldLUvlkeFVLTkA/viewform?usp=sf_link');
 
       const row = new MessageActionRow().addComponents(link_button);
