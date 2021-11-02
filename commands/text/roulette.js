@@ -94,7 +94,7 @@ module.exports = {
       // If the user wants to bail
       if(i.customId === "0"){
         // Calculate the user's new balance
-        let balance = Math.ceil(user_balance + (user_bet * curr_multiplier));
+        let balance = Math.ceil((user_balance - user_bet) + (user_bet * curr_multiplier));
 
         User.findOneAndUpdate({id: interaction.author.id}, {balance}).then(() => {
 
