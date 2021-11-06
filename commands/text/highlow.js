@@ -50,7 +50,7 @@ module.exports = {
       let user_pick;
 
       // Generate a random number between 1 - 6 (included)
-      let dice = Math.ceil((Math.random() * 6) - 1);
+      let dice = Math.floor((Math.random() * 6) + 1);
 
       collector.on('collect', i => {
         user_pick = i.customId === "0" ? "Low" : "High";
