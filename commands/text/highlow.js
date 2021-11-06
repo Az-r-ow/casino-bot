@@ -74,6 +74,7 @@ module.exports = {
           'https://cdn.discordapp.com/attachments/760579818256334878/906621255501905920/DICES_1--.jpg',
           'https://cdn.discordapp.com/attachments/760579818256334878/906622376924577903/DICES_2--_1.jpg',
           'https://cdn.discordapp.com/attachments/760579818256334878/906621407918694421/DICES_2--.jpg',
+          'https://cdn.discordapp.com/attachments/760579818256334878/906621407918694421/DICES_3--.jpg',
           'https://cdn.discordapp.com/attachments/760579818256334878/906621799603765248/DICES_4--.jpg',
           'https://cdn.discordapp.com/attachments/760579818256334878/906622141137580072/DICES_5--.jpg',
           'https://cdn.discordapp.com/attachments/760579818256334878/906622488899903568/DICES_6--.jpg'
@@ -81,8 +82,6 @@ module.exports = {
 
         // Disable the button to end the interaction
         message.components[0].components.forEach(button => button.disabled = true);
-
-        console.log(dice);
 
         if(reason === 'won'){
           user_balance = (user_balance - user_bet) + (user_bet * multiplier);
@@ -105,6 +104,7 @@ module.exports = {
                 {name: `Picked :`, value: `\`${user_pick}\``, inline: true},
                 {name: `Rolled :`, value: `\`${dice}\``, inline: true},
                 {name: `Multiplier :`, value: `\`${multiplier}x\``, inline: false}
+                {name: `Multiplier :`, value: `\`${multiplier}x\``, inline: true}
               ],
               image: {
                 url: img_urls[dice - 1]
@@ -129,7 +129,8 @@ module.exports = {
             fields: [
               {name: `Picked :`, value: `\`${user_pick}\``, inline: true},
               {name: `Rolled :`, value: `\`${dice}\``, inline: true},
-              {name: 'Multiplier :', value: `\`0x\``, inline: false}
+              {name: 'Multiplier :', value: `\`0x\``, inline: false},
+              {name: 'Multiplier :', value: `\`0x\``, inline: true}
             ],
             color,
             image: {
