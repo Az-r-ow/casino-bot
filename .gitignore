@@ -5,3 +5,4 @@ config.json
 /img
 .DS_Store
 github_token.txt
+/dev
