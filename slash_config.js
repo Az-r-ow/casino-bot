@@ -11,6 +11,7 @@ const guildId = '888040923613786114';
 
 for (const file of commandFiles) {
 	const command = require(`./commands/slash/${file}`);
+	console.log(command.data.toJSON());
   console.log(`Loaded ${file}`);
 	commands.push(command.data.toJSON());
 }
