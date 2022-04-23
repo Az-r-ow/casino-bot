@@ -25,6 +25,7 @@ const ShopItem = mongoose.model('shop_items', shop_itemSchema);
 
 const userSchema = new mongoose.Schema({
   id: String,
+  guild_id: String,
   balance: {type: Number, default: 0},
   last_claimed: {type: Date, default: Date.now()}
 });

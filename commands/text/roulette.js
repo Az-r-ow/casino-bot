@@ -23,7 +23,7 @@ module.exports = {
     let user_balance;
 
     try {
-      await User.findOne({id: interaction.author.id}).then(user_data => {
+      await User.findOne({id: interaction.author.id, guild_id: interaction.guildId}).then(user_data => {
         if(user_bet > user_data.balance){
           enough_balance = false;
           interaction.reply({embeds: [{
@@ -50,7 +50,7 @@ module.exports = {
     if(barrel.indexOf(1) === 0){
       user_balance -= Math.ceil(user_bet);
       try {
-        await User.findOneAndUpdate({id: interaction.author.id}, {balance: user_balance});
+        await User.findOneAndUpdate({id: interaction.author.id, guild_id: interaction.guildId}, {balance: user_balance});
       } catch (e) {
         console.log(`An error has occured while updating ${interaction.author.id} balance`, e);
         return interaction.reply({embed: [{
@@ -61,10 +61,7 @@ module.exports = {
       return interaction.reply({
         embeds: [{
         description: 'Unlucky ! You died.',
-        color: 0xff0000,
-        image: {
-          url: "https://cdn.discordapp.com/attachments/798934421163474954/902586889591222292/lost.png"
-        }
+        color: 0xff0000
       }]
     })
     }
@@ -96,7 +93,7 @@ module.exports = {
         // Calculate the user's new balance
         let balance = Math.ceil((user_balance - user_bet) + (user_bet * curr_multiplier));
 
-        User.findOneAndUpdate({id: interaction.author.id}, {balance}).then(() => {
+        User.findOneAndUpdate({id: interaction.author.id, guild_id: interaction.guildId}, {balance}).then(() => {
 
           i.reply({
             embeds: [{
@@ -128,7 +125,7 @@ module.exports = {
         if(barrel.indexOf(1) === curr_round){
           let balance = user_balance - Math.ceil(user_bet);
 
-          User.findOneAndUpdate({id: interaction.author.id}, {balance}).then(() => {
+          User.findOneAndUpdate({id: interaction.author.id, guild_id: interaction.guildId}, {balance}).then(() => {
 
             i.reply({
               embeds: [{
@@ -167,14 +164,12 @@ module.exports = {
                      reason === "user_died" ? "(You lost)" :
                      reason === "user_bailed" ? "(You left the game)" : "";
 
-      let image_url = reason === "user_bailed" ? "https://cdn.discordapp.com/attachments/798934421163474954/902586866103103508/won.png" : "https://cdn.discordapp.com/attachments/798934421163474954/902586889591222292/lost.png";
-
       let color = reason === "user_bailed" ? 0x2ECC71 : 0xff0000;
 
       if(reason === "idle"){
         let balance = user_balance - user_bet;
 
-        User.findOneAndUpdate({id: interaction.author.id}, {balance}).catch(e => {
+        User.findOneAndUpdate({id: interaction.author.id, guild_id: interaction.guildId}, {balance}).catch(e => {
           console.log('An error has occured while updating ' + interaction.author.id + ' balance : ', e);
         });
       }
@@ -184,10 +179,7 @@ module.exports = {
       message.edit({
         embeds: [{
           description: `Game ended ${s_reason} !`,
-          color,
-          image: {
-            url: image_url
-          }
+          color
         }],
         components: message.components
       })

@@ -36,24 +36,6 @@ client.once('ready', () => {
   console.log('All set !');
 });
 
-//When the bots gets added to a server
-client.on('guildCreate', async guild => {
-  try{
-    const greeting_channel = await guild.channels.fetch('888040973546958898').then(channel => {
-      channel.send({
-        embeds: [{
-          title: 'Greetings !',
-          description: `Hello everyone !\nI am the casino bot created by <@!468141864134901770> (So if you're having some trouble contact him but dont \*\*Spam\*\*). There\'s two ways to interact with me either with \*\*slash\*\* commands or with \*\*text\*\* commands.\nFor slash commands you have to follow the format : \`${prefix} <command name>\`.\nFor more info about the commands available do \`${prefix} help\``,
-          color: 0x9437E3
-        }]
-      })
-    });
-  }catch(e){
-    console.log('Channel not found : ', e);
-  }
-
-})
-
 client.on('messageCreate', async message => {
 
   //Ignore messages if they're not sent by a user and does not start with the prefix

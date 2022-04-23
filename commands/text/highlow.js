@@ -18,7 +18,7 @@ module.exports = {
     let user_balance;
 
     try{
-      const user_profile = await User.findOne({id: interaction.member.id});
+      const user_profile = await User.findOne({id: interaction.member.id, guild_id: interaction.guildId});
       if(user_profile.balance < user_bet)return interaction.reply("You don't have that much money.");
       user_balance = user_profile.balance;
     }catch (e){
@@ -70,21 +70,13 @@ module.exports = {
       collector.on('end', async (collected, reason) => {
         const color = reason === 'won' ? 0x2ECC71 : 0xff0000;
         const reason_loss = reason === "idle" ? "Timeout" : "Lost";
-        const img_urls = [
-          'https://cdn.discordapp.com/attachments/760579818256334878/906621255501905920/DICES_1--.jpg',
-          'https://cdn.discordapp.com/attachments/760579818256334878/906622376924577903/DICES_2--_1.jpg',
-          'https://cdn.discordapp.com/attachments/760579818256334878/906621407918694421/DICES_2--.jpg',
-          'https://cdn.discordapp.com/attachments/760579818256334878/906621799603765248/DICES_4--.jpg',
-          'https://cdn.discordapp.com/attachments/760579818256334878/906622141137580072/DICES_5--.jpg',
-          'https://cdn.discordapp.com/attachments/760579818256334878/906622488899903568/DICES_6--.jpg'
-        ];
 
         // Disable the button to end the interaction
         message.components[0].components.forEach(button => button.disabled = true);
 
         if(reason === 'won'){
           user_balance = (user_balance - user_bet) + (user_bet * multiplier);
-          await User.findOneAndUpdate({id: interaction.member.id}, {balance: user_balance}).catch(e => {
+          await User.findOneAndUpdate({id: interaction.member.id, guild_id: interaction.guildId}, {balance: user_balance}).catch(e => {
             console.log('An error while updating : ', interaction.member.id,  e);
             return message.edit({
               embeds: [{
@@ -104,16 +96,13 @@ module.exports = {
                 {name: `Rolled :`, value: `\`${dice}\``, inline: true},
                 {name: `Multiplier :`, value: `\`${multiplier}x\``, inline: false}
               ],
-              image: {
-                url: img_urls[dice - 1]
-              },
               color
             }],
             components: message.components
           })
         }else{
           user_balance -= user_bet;
-          await User.findOneAndUpdate({id: interaction.member.id}, {balance: user_balance}).catch(e => {
+          await User.findOneAndUpdate({id: interaction.member.id, guild_id: interaction.guildId}, {balance: user_balance}).catch(e => {
             console.log('An error has occured while updating : ', interaction.member.id, e);
             return message.edit('An error has occured !');
           });
@@ -129,10 +118,7 @@ module.exports = {
               {name: `Rolled :`, value: `\`${dice}\``, inline: true},
               {name: 'Multiplier :', value: `\`0x\``, inline: false}
             ],
-            color,
-            image: {
-              url: img_urls[dice - 1]
-            }
+            color
           };
 
           return message.edit({

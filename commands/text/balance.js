@@ -14,7 +14,7 @@ module.exports = {
     if(args.length > 1){
       // Assign it the tag if matched
       user_id = args[1].match(/\d{18}/g) ? args[1].match(/\d{18}/g)[0] : interaction.member.id;
-    }; 
+    };
 
     user_id = !args.length ? user_id : args[0].match(/\d{18}/g) ? args[0] : user_id;
 
@@ -25,7 +25,7 @@ module.exports = {
     });
 
 
-    await User.findOne({id: user_id}).then(user_data => {
+    await User.findOne({id: user_id, guild_id: interaction.guildId}).then(user_data => {
       //No user found
       // Send an empty balance
       if(!user_data)return interaction.reply({

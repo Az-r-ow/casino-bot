@@ -6,7 +6,7 @@ module.exports = {
   async execute(interaction, args, client){
     const {User} = require('../../db_connection.js');
 
-    await User.find({}).sort({balance: "desc"}).limit(5).then(async data => {
+    await User.find({guild_id: interaction.guildId}).sort({balance: "desc"}).limit(5).then(async data => {
 
       // For is used in this case because it supports async await
       for(user_data of data){

@@ -12,7 +12,7 @@ module.exports = {
     const {User} = require('../../db_connection.js');
     const ms_to_readable = require('../../helpers/ms_to_readable.js');
 
-    await User.findOne({id: interaction.member.id}).then(user => {
+    await User.findOne({id: interaction.member.id, guild_id: interaction.guildId}).then(user => {
 
       //The amount that the user has won for today
       const amount_won = daily_amount();
@@ -24,6 +24,7 @@ module.exports = {
       if(!user){
         let newUser = new User({
           id: interaction.member.id,
+          guild_id: interaction.guildId,
           balance: amount_won
         });
 
@@ -49,7 +50,7 @@ module.exports = {
 
         user.balance += amount_won;
 
-        User.findOneAndUpdate({id: interaction.member.id}, {balance: user.balance, last_claimed: Date.now()}).then(() => {
+        User.findOneAndUpdate({id: interaction.member.id, guild_id: interaction.guildId}, {balance: user.balance, last_claimed: Date.now()}).then(() => {
           interaction.reply(`You earned : ${amount_won} today ! \nYou now have : ${user.balance}`);
         }).catch(e => {
           console.log(`An error has occured while trying to update ${interaction.member.id}'s balance which should be of : ${user.balance}'`);
