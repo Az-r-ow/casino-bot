@@ -1,5 +1,6 @@
-const {User} = require('../../db_connection.js');
-const {prefix} = require('../../config.json');
+const { User } = require('../../db_connection.js');
+const { prefix } = require('../../config.json');
+
 module.exports = {
   name: 'balance',
   usage: `${prefix} balance <user_tag>`,
@@ -14,7 +15,7 @@ module.exports = {
     if(args.length > 1){
       // Assign it the tag if matched
       user_id = args[1].match(/\d{18}/g) ? args[1].match(/\d{18}/g)[0] : interaction.member.id;
-    }; 
+    };
 
     user_id = !args.length ? user_id : args[0].match(/\d{18}/g) ? args[0] : user_id;
 

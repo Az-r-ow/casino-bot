@@ -24,12 +24,3 @@ whitelist_item.save().then(item => {
 }).catch(e => {
   console.log('An error has occured while creating an item : ', e);
 });
-
-let resetDaily = Date.now() - ( 1000 * 60 * 60 * 24);
-
-User.updateMany({}, {last_claimed: resetDaily}).then(res => {
-  console.log('Dailies has been resetted.');
-  console.log('Matched = ', res.matchedCount);
-  console.log('Modified = ', res.modifiedCount);
-  console.log("did everything go smoothly ? ", res.acknowledged);
-})

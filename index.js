@@ -68,7 +68,7 @@ client.on('messageCreate', async message => {
 
   let commandName = args[0].toLowerCase();
 
-  const command = client.commands.get(commandName);
+  const command = client.commands.get(commandName) || client.commands.find(a => a.aliases && a.aliases.includes(commandName));
 
   // If the command is not found exit
   if(!command)return;

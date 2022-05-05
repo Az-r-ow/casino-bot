@@ -1,5 +1,7 @@
 const {prefix} = require('../../config.json');
-const {ShopItem} = require('../../db_connection.js')
+const {ShopItem} = require('../../db_connection.js');
+const { pinkHex } = require('../../helpers/consts.js');
+
 module.exports = {
   name: 'shop',
   usage: `${prefix} shop <item_name>`,
@@ -17,7 +19,7 @@ module.exports = {
             title: item_info.name,
             description: item_info.feature,
             fields: [{name: 'Price :', value: `\`${item_info.price}\``, inline: false}],
-            color: 0x9437E3
+            color: pinkHex
           }]
         })
       }).catch(e => {
@@ -29,11 +31,15 @@ module.exports = {
           return {name: item.name, value: `Price : \`${item.price}\``}
         });
 
+        let comingSoon = !shop_items.length ? "Coming soon ..." : "";
+
+
         interaction.reply({
           embeds: [{
             title: 'Shop :',
+            description: comingSoon,
             fields: embed_fields,
-            color: 0x9437E3
+            color: pinkHex
           }]
         }).catch(e => console.log(`An error has occured while sending a reply to ${interaction.user.id}`))
       }).catch(e => {

@@ -1,13 +1,16 @@
 const {MessageButton, MessageActionRow} = require('discord.js');
 const load_barrel = require('../../helpers/load_barrel.js');
 const {prefix} = require('../../config.json');
+const { wonImgUrl, loseImgUrl } = require('../../helpers/consts.js');
+
+
 module.exports = {
   name: 'roulette',
   usage: `${prefix} roulette <amount>`,
   description: 'Survive the roulette game to gain your bet.\n6 bullets gun is used, the more you replay, the more you gain (x4 if you survive the 5 shots).\nAlways count your shots because this is a realistic version of the game!',
   async execute(interaction, args, client){
 
-    const {User} = require('../../db_connection.js');
+    const { User } = require('../../db_connection.js');
     //No arguments provided
     // Return error message
     if((args.length === 1) || !+args[1] || +args[1] <= 1)return interaction.reply({embeds: [{
@@ -63,7 +66,7 @@ module.exports = {
         description: 'Unlucky ! You died.',
         color: 0xff0000,
         image: {
-          url: "https://cdn.discordapp.com/attachments/798934421163474954/902586889591222292/lost.png"
+          url: loseImgUrl
         }
       }]
     })
@@ -167,7 +170,7 @@ module.exports = {
                      reason === "user_died" ? "(You lost)" :
                      reason === "user_bailed" ? "(You left the game)" : "";
 
-      let image_url = reason === "user_bailed" ? "https://cdn.discordapp.com/attachments/798934421163474954/902586866103103508/won.png" : "https://cdn.discordapp.com/attachments/798934421163474954/902586889591222292/lost.png";
+      let image_url = reason === "user_bailed" ? wonImgUrl : loseImgUrl;
 
       let color = reason === "user_bailed" ? 0x2ECC71 : 0xff0000;
 

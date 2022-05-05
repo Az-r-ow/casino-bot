@@ -3,7 +3,7 @@ module.exports = {
   name: "daily",
   usage: `${prefix} daily`,
   description: "Claim your daily coins.",
-  async execute(interaction,args,  client){
+  async execute(interaction, args, client){
     // A function that will generate a random number between 50 and 150
     function daily_amount(){
       return Math.floor((Math.random() * 100) + 50);

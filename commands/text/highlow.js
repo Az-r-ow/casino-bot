@@ -1,5 +1,6 @@
 const {prefix} = require('../../config.json');
-const {MessageButton, MessageActionRow} = require('discord.js');
+const { MessageButton, MessageActionRow } = require('discord.js');
+const { wonImgUrl, loseImgUrl } = require('../../helpers/consts.js');
 
 module.exports = {
   name: "highlow",
@@ -70,14 +71,6 @@ module.exports = {
       collector.on('end', async (collected, reason) => {
         const color = reason === 'won' ? 0x2ECC71 : 0xff0000;
         const reason_loss = reason === "idle" ? "Timeout" : "Lost";
-        const img_urls = [
-          'https://cdn.discordapp.com/attachments/760579818256334878/906621255501905920/DICES_1--.jpg',
-          'https://cdn.discordapp.com/attachments/760579818256334878/906622376924577903/DICES_2--_1.jpg',
-          'https://cdn.discordapp.com/attachments/760579818256334878/906621407918694421/DICES_2--.jpg',
-          'https://cdn.discordapp.com/attachments/760579818256334878/906621799603765248/DICES_4--.jpg',
-          'https://cdn.discordapp.com/attachments/760579818256334878/906622141137580072/DICES_5--.jpg',
-          'https://cdn.discordapp.com/attachments/760579818256334878/906622488899903568/DICES_6--.jpg'
-        ];
 
         // Disable the button to end the interaction
         message.components[0].components.forEach(button => button.disabled = true);
@@ -104,10 +97,10 @@ module.exports = {
                 {name: `Rolled :`, value: `\`${dice}\``, inline: true},
                 {name: `Multiplier :`, value: `\`${multiplier}x\``, inline: false}
               ],
+              color,
               image: {
-                url: img_urls[dice - 1]
-              },
-              color
+                url: wonImgUrl
+              }
             }],
             components: message.components
           })
@@ -131,7 +124,7 @@ module.exports = {
             ],
             color,
             image: {
-              url: img_urls[dice - 1]
+              url: loseImgUrl
             }
           };
 
@@ -142,7 +135,5 @@ module.exports = {
         }
       })
     })
-
-
   }
 }

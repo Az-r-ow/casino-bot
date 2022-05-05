@@ -1,4 +1,6 @@
 const {prefix} = require('../../config.json');
+const { pinkHex } = require("../../helpers/consts.js");
+
 module.exports = {
   name: 'leaderboard',
   usage: `${prefix} leaderboard`,
@@ -7,6 +9,8 @@ module.exports = {
     const {User} = require('../../db_connection.js');
 
     await User.find({}).sort({balance: "desc"}).limit(5).then(async data => {
+
+      if (!data || data.length < 5) return interaction.reply("Not enough users");
 
       // For is used in this case because it supports async await
       for(user_data of data){
@@ -33,7 +37,7 @@ module.exports = {
         embeds: [{
           title: 'Leaderboard :',
           fields: data_fields,
-          color: 0x9437E3,
+          color: pinkHex,
         }]
       }).catch(e => {
         console.log('An error has occured while sending a reply : ', e);
